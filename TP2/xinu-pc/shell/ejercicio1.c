@@ -14,7 +14,8 @@ void ejercicio1(void)
     resume(pidB);
     resume(pidC);
     high_level_scheduler(pidA, 120, pidB, 60, pidC, 20);
-
+    recvclr();
+    receive();
 
 }
 

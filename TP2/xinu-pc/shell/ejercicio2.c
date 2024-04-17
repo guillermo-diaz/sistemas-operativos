@@ -11,6 +11,8 @@ void ejercicio2(void){
     semCon = semcreate(0);
     resume(create(consume, 4000, 20, "cons", 0));
     resume(create(produce, 4000, 20, "prod", 0));
+    recvclr();
+    receive();
 }
 
 void produce(void) {
