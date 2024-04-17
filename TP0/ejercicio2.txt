@@ -1,0 +1,3 @@
+Word: es el tamaño de datos natural con la cual trabaja una arquitectura, es un tamaño fijo y se utiliza para 
+representar números, direcciones de memoria, etc. También puede reflejar el ancho de los registros de la CPU, el ancho del bus de datos, el tamaño de
+las operaciones que puede realizar la ALU.
