@@ -79,3 +79,5 @@ extern	shellcmd  xsh_help	(int32, char *[]);
 // extern shellcmd carreras(void);
 
 extern   control_race();
+
+extern void mainPrimos(void);

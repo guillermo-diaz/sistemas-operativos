@@ -29,7 +29,8 @@ const	struct	cmdent	cmdtab[] = {
 	{"uptime",	FALSE,	xsh_uptime},
 	{"?",		FALSE,	xsh_help},
 	// {"carrera", FALSE, carreras},
-	{"parcial",		FALSE,	control_race}
+	{"parcial",		FALSE,	control_race},
+	{"recu", FALSE, mainPrimos}
 
 };
 

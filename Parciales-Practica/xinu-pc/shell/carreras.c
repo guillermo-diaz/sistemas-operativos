@@ -3,7 +3,7 @@
 
 int vel_a = 0;
 int vel_b = 0;
-int distancia = 0;
+int distancia = -1;
 int valorMostrar = 0;
 int c;
 sid32 semA, semB, semC;
@@ -12,10 +12,10 @@ corredor_a()
     while (1)
     {
         wait(semA);
-        vel_a++;
         wait(semC);
         distancia++;
         signal(semC);
+        vel_a++;
         signal(semA);
     }
 }
@@ -26,16 +26,24 @@ corredor_b()
     while (1)
     {
         wait(semB);
-        vel_b++;
         wait(semC);
         distancia++;
         signal(semC);
+        vel_b++;
         signal(semB);
-       
     }
 }
 
-
+/*
+Luego, el proceso control_race debe permitirle al usuario gestionar los procesos que corren de la siguiente
+manera:
+○ Si el usuario presiona la tecla 1, el proceso corredor_a se suspende/reanuda.
+○ Si el usuario presiona la tecla 5 el proceso corredor_a muere.
+○ Si el usuario presiona la tecla 2 el proceso corredor_b se suspende/reanuda.
+○ Si el usuario presiona la tecla 6 el proceso corredor_b muere.
+Implemente las pulsaciones del teclado (teclas 1, 2, 5, y 6). A partir de las pulsaciones
+“control_race” realiza las acciones mencionadas (suspender/reanudar, matar).
+*/
 muestra_carrera()
 {
     /* limpiar toda la pantalla */
@@ -52,7 +60,16 @@ muestra_carrera()
         /* Nos posicionamos en la fila 6 columna 10 */
         printf("%c[6;10f", ASCII_ESC);
         printf("Velocidad corredor B: %d \n", vel_b);
-        
+        /*
+        printf("%c[7;10f", ASCII_ESC);
+                printf("1: el proceso corredor_a se suspende/reanuda. ");
+                printf("%c[8;10f", ASCII_ESC);
+                printf("5: el proceso corredor_a muere.  \n");
+                printf("%c[9;10f", ASCII_ESC);
+                printf("2: el proceso corredor_b se suspende/reanuda. \n");
+                printf("%c[10;10f", ASCII_ESC);
+                printf("6: el proceso corredor_b muere. \n");
+        */
 
         sleepms(50);
     }
@@ -81,25 +98,26 @@ control_race()
         {
         case '1':
             wait(semA);
-            if (estadoA){
+            if (estadoA)
+            {
                 // veradero entonces esta en listo
-                wait(semC);
                 suspend(pidA);
-                estadoA = 0;
                 signal(semC);
-                
-            }else{
+                estadoA = 0;
+            }
+            else
+            {
                 resume(pidA);
                 estadoA = 1;
             }
             signal(semA);
-           
 
             break;
         case '5':
-        //  wait(semA);
-        //     kill(pidA);
-        //      signal(semA);
+            wait(semA);
+            kill(pidA);
+             signal(semC);
+            signal(semA);
             break;
         case '2':
             wait(semB);
@@ -107,6 +125,7 @@ control_race()
             {
                 // veradero entonces esta en listo
                 suspend(pidB);
+                 signal(semC);
                 estadoB = 0;
             }
             else
@@ -114,13 +133,13 @@ control_race()
                 resume(pidB);
                 estadoB = 1;
             }
-
             signal(semB);
             break;
         case '6':
-            // wait(semB);
-            // kill(pidB);
-            //  signal(semB);
+            wait(semB);
+            kill(pidB);
+             signal(semC);
+            signal(semB);
             break;
         case 'p':
             wait(semC);
