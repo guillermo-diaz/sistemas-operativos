@@ -30,7 +30,8 @@ const	struct	cmdent	cmdtab[] = {
 	{"?",		FALSE,	xsh_help},
 	// {"carrera", FALSE, carreras},
 	{"parcial",		FALSE,	control_race},
-	{"recu", FALSE, mainPrimos}
+	{"recu", FALSE, mainPrimos},
+	{"parcial2", FALSE, gestor_bisiestos}
 
 };
 

@@ -35,7 +35,9 @@ int encontrar_primos(int from, int to) {
 
     return 0;
 }
-//  int encontrar_primos(int from, int to)
+//  
+// 
+// int encontrar_primos(int from, int to)
 //  {
 //          int i, n, primo;
 //          printf( "\n   " );

@@ -79,3 +79,5 @@ extern	shellcmd  xsh_help	(int32, char *[]);
 extern void ejercicio1 (void);
 
 extern void ejercicio2 (void);
+
+extern void ejercicio3 (void);

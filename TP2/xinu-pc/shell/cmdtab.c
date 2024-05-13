@@ -29,7 +29,8 @@ const	struct	cmdent	cmdtab[] = {
 	{"uptime",	FALSE,	xsh_uptime},
 	{"?",		FALSE,	xsh_help},
 	{"ejercicio1", FALSE,	ejercicio1},
-	{"ejercicio2", FALSE,	ejercicio2}
+	{"ejercicio2", FALSE,	ejercicio2},
+	{"ejer3", FALSE, ejercicio3}
 
 };
 

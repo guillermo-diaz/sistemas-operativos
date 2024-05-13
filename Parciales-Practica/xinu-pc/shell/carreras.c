@@ -97,12 +97,12 @@ control_race()
         switch (c)
         {
         case '1':
-            wait(semA);
+            // wait(semA);
             if (estadoA)
             {
                 // veradero entonces esta en listo
                 suspend(pidA);
-                signal(semC);
+                // signal(semC);
                 estadoA = 0;
             }
             else
@@ -148,5 +148,9 @@ control_race()
             break;
         }
     }
+
+    /*
+    
+    */
     control(CONSOLE, TC_MODEC, 0, 0);
 }
