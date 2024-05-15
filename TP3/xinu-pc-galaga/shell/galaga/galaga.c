@@ -1,4 +1,4 @@
-
+#include <xinu.h>
 #include "titlescreen.h"
 #include "playerImage.h"
 #include "enemy.h"
@@ -9,6 +9,7 @@
 extern unsigned char tecla_actual;
 typedef unsigned short u16;
 #define RGB(r, g, b) (r | (g << 5) | (b << 10))
+
 // #define REG_DISPCNT *(u16 *)0x4000000
 #define extern videoBuffer
 #define MODE3 3
@@ -35,12 +36,15 @@ typedef unsigned short u16;
 #define BUTTON_B	0x25 
 #define BUTTON_SELECT	0x03
 #define BUTTON_START	0x2c
-#define BUTTON_RIGHT	0x1f
-#define BUTTON_LEFT	0x1e	
-#define BUTTON_UP	'w'
-#define BUTTON_DOWN 	's'	
+#define BUTTON_RIGHT	0x20 /*D*/
+#define BUTTON_LEFT	0x1e	/*A*/
+#define BUTTON_UP	0x11 /*W*/
+#define BUTTON_DOWN 0x1f /*S*/
 #define BUTTON_R	'1'
 #define BUTTON_L	'2'
+#define BUTTON_ESC		0x01 /*ESC*/
+
+
 #define KEY_DOWN_NOW(key)  (tecla_actual == key)
 
 //variable definitions
@@ -63,6 +67,15 @@ void drawEnemies();
 void endGame();
 int collision(u16 enemyX, u16 enemyY, u16 enemyWidth, u16 enemyHeight, u16 playerX, u16 playerY);
 
+pid32 pid_game;
+pid32 pid_puntaje;
+pid32 pid_control;
+
+enum EventMsg	 { SCORE_UP, DAMAGED, RESET };
+int state;
+int puntuacion;
+int vidas;
+
 //objects
 struct Players {
 	volatile u16 playerX;
@@ -81,7 +94,8 @@ int shoots[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int curr_shot = 0;
 #define N_SHOOTS 10
 
-int galaga(void) {
+
+int galaga_game(void) {
 	//easy enemy wave set setup
 	struct Enemy easyEnemies[9];
 	for (int a = 0; a < 9; a++) {
@@ -152,7 +166,7 @@ int galaga(void) {
 			player.playerY += playerspeed;
 		}
 		waitForVBlank();
-		sleepms(50);
+		sleepms(20);
 		//draw player
 		drawImage3(player.playerX, player.playerY, 24, 24, playerImage);
 		drawHollowRect(player.playerX - 1, player.playerY - 1, 26, 26, BLACK);
@@ -162,7 +176,10 @@ int galaga(void) {
 			easyEnemies[a].enemyY += enemyspeed;
 			drawImage3(easyEnemies[a].enemyX, easyEnemies[a].enemyY, 20, 20, enemy);
 			if (collision(easyEnemies[a].enemyX, easyEnemies[a].enemyY, 20, 20, player.playerX, player.playerY)) {
+				drawRect(easyEnemies[a].enemyX, easyEnemies[a].enemyY, 20, 20, BLACK); // Elimina al enemigo de la pantalla
+                easyEnemies[a].enemyY = 0; // Restablece la posición del enemigo
 				endGame();
+				
 			}	
 			if (easyEnemies[a].enemyY >= 160) {
 				easyEnemies[a].enemyY = 0;
@@ -181,6 +198,7 @@ int galaga(void) {
 			// check hits of shoots
 			for (int j = 0; j < 9; j++) {
 				if (collision(easyEnemies[j].enemyX, easyEnemies[j].enemyY, 15, 15, shoots[i] % 240, shoots[i] / 240)) {
+					
 					drawRect(easyEnemies[j].enemyX, easyEnemies[j].enemyY,  20, 20, BLACK);
 					drawRect((shoots[i] % 240), (shoots[i] / 240)+4, 5, 5, BLACK);
 					easyEnemies[j].enemyY = 0;
@@ -194,6 +212,8 @@ int galaga(void) {
 			hardEnemies[a].enemyY += enemyspeed;
 			drawImage3(hardEnemies[a].enemyX, hardEnemies[a].enemyY, 20, 20, enemy);
 			if (collision(hardEnemies[a].enemyX, hardEnemies[a].enemyY, 20, 20, player.playerX, player.playerY)) {
+				drawRect(hardEnemies[a].enemyX, hardEnemies[a].enemyY, 20, 20, BLACK); // Elimina al enemigo de la pantalla
+                hardEnemies[a].enemyY = 0; // Restablece la posición del enemigo
 				endGame();
 			}	
 			if (hardEnemies[a].enemyY >= 228) {
@@ -265,15 +285,55 @@ int collision(u16 enemyX, u16 enemyY, u16 enemyWidth, u16 enemyHeight, u16 playe
 }
 
 void endGame() {
+	send(pid_puntaje, DAMAGED);
+
 	//start Game Over State
-	drawImage3(0, 0, 240, 160, gameover);
-	drawHollowRect(0, 0, 240, 160, WHITE);
-	while(1) {
-		if (KEY_DOWN_NOW(BUTTON_SELECT)) {
-			galaga();
+	if (vidas <= 0){
+		
+		drawImage3(0, 0, 240, 160, gameover);
+		drawHollowRect(0, 0, 240, 160, WHITE);
+		while(1) {
+			if (KEY_DOWN_NOW(BUTTON_SELECT) || KEY_DOWN_NOW(BUTTON_START)) {
+				send(pid_puntaje, RESET);
+				galaga();
+			}
+			if (KEY_DOWN_NOW(BUTTON_ESC)){
+				send(pid_control, -1);
+			}
 		}
-		if (KEY_DOWN_NOW(BUTTON_START))	{
-			galaga();
-		}
+
 	}
+}
+
+void puntaje() {
+	char buffer[32];
+	puntuacion = 0;
+	vidas = 3;
+	while(1){
+		switch(receive()){
+			case DAMAGED: vidas--;	
+			case SCORE_UP: puntuacion++; break;
+			case RESET: puntuacion = 0; vidas = 3; break;
+			default: break;
+		}
+ 		sprintf(buffer, "Vidas: %d    Score: %d        ", vidas, puntuacion);
+		print_text_on_vga(4, 164, buffer);
+	}
+}
+
+
+
+int galaga(void){
+	pid_game = create(galaga_game, 1024, 20, "Galaga Game", 0);
+	pid_puntaje = create(puntaje, 1024, 20, "Galaga Score", 0);
+	pid_control = currpid;
+	resume(pid_game);
+	resume(pid_puntaje);
+
+	receive();
+
+	kill(pid_game);
+	kill(pid_puntaje);
+
+	return 0;
 }
