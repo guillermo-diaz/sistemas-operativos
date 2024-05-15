@@ -170,6 +170,11 @@ int galaga_game(void) {
 		}
 		waitForVBlank();
 		sleepms(20);
+
+		//terminar
+		if (KEY_DOWN_NOW(BUTTON_ESC)) {
+			send(pid_control, -1);
+		}
 		//draw player
 		drawImage3(player.playerX, player.playerY, 24, 24, playerImage);
 		drawHollowRect(player.playerX - 1, player.playerY - 1, 26, 26, BLACK);
@@ -323,16 +328,18 @@ void puntaje() {
 	puntuacion = 0;
 	vidas = 3;
 	while(1){
+ 		sprintf(buffer, "Vidas: %d    Score: %d        ", vidas, puntuacion);
+		print_text_on_vga(4, 164, buffer);
+
 		switch(receive()){
 			case DAMAGED: vidas--; break;	
 			case SCORE: puntuacion++; break;
 			case RESET: puntuacion = 0; vidas = 3; break;
 			default: break;
 		}
- 		sprintf(buffer, "Vidas: %d    Score: %d        ", vidas, puntuacion);
-		print_text_on_vga(4, 164, buffer);
 	}
 }
+
 
 
 
