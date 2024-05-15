@@ -71,7 +71,10 @@ pid32 pid_game;
 pid32 pid_puntaje;
 pid32 pid_control;
 
-enum EventMsg	 { SCORE_UP, DAMAGED, RESET };
+#define DAMAGED 1
+#define SCORE 2
+#define RESET 3
+
 int state;
 int puntuacion;
 int vidas;
@@ -186,7 +189,6 @@ int galaga_game(void) {
 			}		
 		}
 
-		//draw shots
 		for (int i = 0; i < N_SHOOTS; i++) {
 			if (shoots[i] != 0) {
 				drawRect((shoots[i] % 240), (shoots[i] / 240)+4, 5, 5, BLACK);
@@ -195,16 +197,27 @@ int galaga_game(void) {
 				if (shoots[i] <=0)   shoots[i]=0;
 			}
 
-			// check hits of shoots
-			for (int j = 0; j < 9; j++) {
-				if (collision(easyEnemies[j].enemyX, easyEnemies[j].enemyY, 15, 15, shoots[i] % 240, shoots[i] / 240)) {
-					
-					drawRect(easyEnemies[j].enemyX, easyEnemies[j].enemyY,  20, 20, BLACK);
-					drawRect((shoots[i] % 240), (shoots[i] / 240)+4, 5, 5, BLACK);
-					easyEnemies[j].enemyY = 0;
-					shoots[i] = 0;
+			if (shoots[i] != 0){
+				// para controlar si ya se envio el mensaje de colision se reinicia en cada bucle del galaga
+				int collisionDetected = 0;
+
+				// Verifica si hay colision con un enemigo
+				for (int j = 0; j < 9; j++){
+					if (collision(easyEnemies[j].enemyX, easyEnemies[j].enemyY, 15, 15, shoots[i] % 240, shoots[i] / 240)){
+						if (!collisionDetected){
+							// Si hay colision y no se ha enviado el mensaje, lo envaa
+							send(pid_puntaje, SCORE);
+							collisionDetected = 1; // Marca que ya se envio el mensaje
+						}
+
+						drawRect(easyEnemies[j].enemyX, easyEnemies[j].enemyY, 20, 20, BLACK);
+						drawRect((shoots[i] % 240), (shoots[i] / 240) + 4, 5, 5, BLACK);
+						easyEnemies[j].enemyY = 0;
+						shoots[i] = 0;
+					}
 				}
 			}
+			
 		}
 		
 		//draw hard enemies
@@ -311,8 +324,8 @@ void puntaje() {
 	vidas = 3;
 	while(1){
 		switch(receive()){
-			case DAMAGED: vidas--;	
-			case SCORE_UP: puntuacion++; break;
+			case DAMAGED: vidas--; break;	
+			case SCORE: puntuacion++; break;
 			case RESET: puntuacion = 0; vidas = 3; break;
 			default: break;
 		}
