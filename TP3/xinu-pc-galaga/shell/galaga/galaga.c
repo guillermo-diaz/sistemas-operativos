@@ -75,7 +75,6 @@ pid32 pid_control;
 #define SCORE 2
 #define RESET 3
 
-int state;
 int puntuacion;
 int vidas;
 
@@ -200,9 +199,8 @@ int galaga_game(void) {
 				drawImage3((shoots[i] % 240), (shoots[i] / 240), 5, 5, shoot);
 				shoots[i] = shoots[i]-240*4;
 				if (shoots[i] <=0)   shoots[i]=0;
-			}
 
-			if (shoots[i] != 0){
+
 				// para controlar si ya se envio el mensaje de colision se reinicia en cada bucle del galaga
 				int collisionDetected = 0;
 
@@ -210,7 +208,7 @@ int galaga_game(void) {
 				for (int j = 0; j < 9; j++){
 					if (collision(easyEnemies[j].enemyX, easyEnemies[j].enemyY, 15, 15, shoots[i] % 240, shoots[i] / 240)){
 						if (!collisionDetected){
-							// Si hay colision y no se ha enviado el mensaje, lo envaa
+							// Si hay colision y no se ha enviado el mensaje, lo envia
 							send(pid_puntaje, SCORE);
 							collisionDetected = 1; // Marca que ya se envio el mensaje
 						}
@@ -222,6 +220,9 @@ int galaga_game(void) {
 					}
 				}
 			}
+
+			
+			
 			
 		}
 		
@@ -253,10 +254,12 @@ int galaga_game(void) {
 		drawHollowRect(fast.fastX - 1, fast.fastY - 1, 17, 17, BLACK);
 		drawHollowRect(fast.fastX - 2, fast.fastY - 2, 19, 19, BLACK);
 		if(collision(fast.fastX, fast.fastY, 15, 15, player.playerX, player.playerY)) {
+			drawRect(fast.fastX, fast.fastY, 15, 15, BLACK); // Elimina al enemigo de la pantalla
+            fast.fastY = 0; // Restablece la posición del enemigo
 			endGame();
 		}		
-//RAFA		fast.fastX += fastXSpeed;
-//RAFA		fast.fastY += fastYSpeed;
+		// fast.fastX += fastXSpeed;
+		// fast.fastY += fastYSpeed;
 		if (fast.fastX >= 240) {
 			fast.fastX = 0;
 		}
