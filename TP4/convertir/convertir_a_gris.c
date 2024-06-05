@@ -37,7 +37,7 @@ void convertir(int in_fd, int out_fd, BMPHeader h, BMPInfoHeader infoh)
 {
 
 	int width = infoh.width;
-	int height = infoh.height;
+	int height = 708;
 	unsigned char gray;
 
 	int padding = (4 - (width * 3) % 4) % 4; // Calculating padding size
@@ -93,6 +93,11 @@ int main()
 
 	write(out_fd, &h, sizeof(BMPHeader));
 	write(out_fd, &infoh, sizeof(BMPInfoHeader));
+
+
+
+
+	printf("w = %d h = %d", infoh.width, infoh.height);
 	write(out_fd, &nueva_imagen[0], infoh.width * infoh.height * 3);
 
 	close(in_fd);
