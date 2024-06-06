@@ -43,9 +43,9 @@ void convertir(int in_fd, int out_fd, BMPHeader h, BMPInfoHeader infoh, int inic
 	int padding = (4 - (width * 3) % 4) % 4; // Calculating padding size
 	unsigned char pixel[3];
 
-    lseek(in_fd, sizeof(BMPHeader) + sizeof(BMPInfoHeader) + (start * (width * 3 + padding)), SEEK_SET);
+    lseek(in_fd, sizeof(BMPHeader) + sizeof(BMPInfoHeader) + (inicio * (width * 3 + padding)), SEEK_SET);
     
-	for (int y = 0; y < cantPixeles; y++) {
+	for (int y = inicio; y < fin; y++) {
 		for (int x = 0; x < width; x++) {
 			read(in_fd, pixel, 3);
 			gray = (unsigned char)(0.3 * pixel[2] + 0.59 * pixel[1] + 0.11 * pixel[0]);

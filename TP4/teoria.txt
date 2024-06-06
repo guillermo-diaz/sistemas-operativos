@@ -1,0 +1,49 @@
+1) 
+GCC significa GNU Compiler Collection.
+El proyecto GCC fue iniciado en 1987 por Richard Stallman, fundador del proyecto GNU y la Free Software Foundation (FSF).
+El objetivo principal de GCC es proporcionar un conjunto libre y de código abierto de compiladores de alta calidad para 
+diversos lenguajes de programación y arquitecturas de hardware
+
+¿Que es POSIX? Portable Operating System Interface (Interfaz Portable de Sistemas Operativos), es un conjunto de
+estándares definidos por la IEEE (Instituto de Ingenieros Eléctricos y Electrónicos) para mantener la compatibilidad 
+entre sistemas operativos.
+Estos estándares especifican las interfaces de programación de aplicaciones (API), las interfaces de comandos y las 
+utilidades que los programas deben seguir para ser portables entre sistemas operativos compatibles con POSIX
+
+
+4)
+PROCN'T, THREADN'T:
+real    0m0,760s
+user    0m0,164s
+sys     0m0,564s
+
+
+PROCESO: 
+real    0m0,557s
+user    0m0,252s
+sys     0m0,976s
+
+
+THREAD: 
+real    0m0,653s
+user    0m0,412s
+sys     0m1,192s
+
+Los procesos parecen ser más rápidos en tiempo real que los hilos, pero tienen una menor carga de CPU en modo
+usuario, lo que puede indicar una mayor sobrecarga en la gestión de procesos en el sistema (sys).
+Los hilos tienen una mayor carga de CPU en modo usuario, lo que sugiere que están realizando más trabajo efectivo
+en el espacio de usuario, pero también una mayor carga de sistema (sys), posiblemente debido a la sincronización y el 
+cambio de contexto entre hilos.
+
+Hilos pueden ser más adecuados si:
+- La tarea puede ser paralelizada efectivamente.
+- Se quiere aprovechar la compartición de memoria para reducir la sobrecarga de IPC.
+- Se implementa una buena gestión de sincronización para evitar condiciones de carrera.
+
+Procesos pueden ser adecuados si:
+- Se necesita un mayor aislamiento.
+- Las tareas son más independientes y hay menos necesidad de comunicación entre ellas.
+
+c) En XINU no existe una syscall para crear un thread porque en sí funciona como modelo de threads, 
+ya que se comparte la sección de código, datos y otros recursos
+
