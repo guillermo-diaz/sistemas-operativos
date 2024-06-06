@@ -4,6 +4,9 @@
 #include <keyboard.h>
 
 unsigned char kblayout [128];  // { ... } Fill your layout yourself 
+struct BufferC buffC;
+sid32 semKbd;
+pid32 pidKbd;
 
 
 void keyboard_wait(byte a_type) //unsigned char
@@ -44,6 +47,11 @@ devcall	kbdinit (
 	  struct dentry	*devptr		/* Entry in device switch table	*/
 	)
 {
+	semKbd = semcreate(1);
+	pidKbd = -1;
+	buffC.semEntrada = semcreate(0);
+	buffC.inicio = 0;
+	buffC.fin = 0;
 
 	int i;
 	for (i=0; i<128; i++)

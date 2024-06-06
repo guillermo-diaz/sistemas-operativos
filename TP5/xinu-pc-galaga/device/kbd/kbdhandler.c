@@ -5,7 +5,9 @@
 #include <xinu.h>
 #include <keyboard.h>
 
-unsigned char tecla_actual;
+extern struct BufferC buffC;
+
+// unsigned char tecla_actual;
 
 unsigned char get_scancode()
 {
@@ -19,17 +21,24 @@ unsigned char get_scancode()
  *  kbdhandler  -  Handle an interrupt for the keyboard device
  *------------------------------------------------------------------------
  */
-void kbdhandler(void)
-{
+void kbdhandler(void){
 	char t[80];
 	unsigned char scancode; 
 	unsigned int shift_key = 0;
 	int i = 10;
 
 	scancode = get_scancode();
-	tecla_actual = scancode;
-	sprintf(t, "kbd: 0x%x     ", scancode);
-	print_text_on_vga(10, 300, t);
+	// tecla_actual = scancode;
+	// sprintf(t, "kbd: 0x%x     ", scancode);
+	// print_text_on_vga(10, 300, t);
+	
+
+	if(!((buffC.fin+1)%KEYBOARD_BUFFER_SIZE == buffC.inicio)){
+        //SI TIENE ESPACIO
+        buffC.buffer[buffC.fin] = scancode;
+        buffC.fin = (buffC.fin+1)%KEYBOARD_BUFFER_SIZE;
+        signal(buffC.semEntrada);
+    }
 
 	if(scancode == 0x2A) {
 		shift_key = 1;//Shift key is pressed

@@ -70,6 +70,8 @@ int collision(u16 enemyX, u16 enemyY, u16 enemyWidth, u16 enemyHeight, u16 playe
 pid32 pid_game;
 pid32 pid_puntaje;
 pid32 pid_control;
+pid32 pid_teclado;
+unsigned char tecla_actual; //agrego tecla_actual xq la elimine del 
 
 #define DAMAGED 1
 #define SCORE 2
@@ -343,18 +345,29 @@ void puntaje() {
 	}
 }
 
+void teclado(){
+	open(KEYBOARD, NULL, NULL);
+    while (1) {
+        read(KEYBOARD, &tecla_actual, 1);
+		printf("TECLA: %d\n", tecla_actual);
+    }  
+	close(KEYBOARD);
+}
+
 
 
 
 int galaga(void){
 	pid_game = create(galaga_game, 1024, 20, "Galaga Game", 0);
 	pid_puntaje = create(puntaje, 1024, 20, "Galaga Score", 0);
+	pid_teclado = create(teclado, 1024, 20, "Galaga Keyboard",0);
 	pid_control = currpid;
 	resume(pid_game);
 	resume(pid_puntaje);
-
+	resume(pid_teclado);
 	receive();
 
+	kill(pid_teclado);
 	kill(pid_game);
 	kill(pid_puntaje);
 
