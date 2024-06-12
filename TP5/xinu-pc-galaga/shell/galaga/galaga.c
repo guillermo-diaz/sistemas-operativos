@@ -84,7 +84,6 @@ int puntuacion;
 int vidas;
 int teclas[3];
 
-int flag_shoot;
 
 //objects
 struct Players {
