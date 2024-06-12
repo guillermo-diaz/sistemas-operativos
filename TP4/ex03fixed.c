@@ -118,7 +118,7 @@ int main(){
     int height = infoh.height;
     int padding = (4 - (width * 3) % 4) % 4;  
     //Copio los pixeles al array
-    read(in_fd, &nueva_imagen, width*height*3 + padding);
+    read(in_fd, &nueva_imagen, width*height*3);
 
     pthread_t tid[3];
     arg_threads args[3];
