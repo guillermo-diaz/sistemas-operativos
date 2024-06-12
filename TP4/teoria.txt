@@ -29,6 +29,11 @@ real    0m0,653s
 user    0m0,412s
 sys     0m1,192s
 
+THREAD MEJORADO: 
+real    0m0,176s
+user    0m0,000s
+sys     0m0,008s
+
 Los procesos parecen ser más rápidos en tiempo real que los hilos, pero tienen una menor carga de CPU en modo
 usuario, lo que puede indicar una mayor sobrecarga en la gestión de procesos en el sistema (sys).
 Los hilos tienen una mayor carga de CPU en modo usuario, lo que sugiere que están realizando más trabajo efectivo
