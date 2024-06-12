@@ -44,7 +44,7 @@ struct	dentry	devtab[NDEVS] =
 	{ 3, 0, "KEYBOARD",
 	  (void *)kbdinit, (void *)kbdopen, (void *)kbdclose,
 	  (void *)kbdread, (void *)kbdwrite, (void *)ioerr,
-	  (void *)ioerr, (void *)ioerr, (void *)ioerr,
+	  (void *)kbdgetc, (void *)ioerr, (void *)ioerr,
 	  (void *)0x0, (void *)kbdhandlerirq, 0 },
 
 /* NULLDEV is null */

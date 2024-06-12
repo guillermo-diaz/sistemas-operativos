@@ -108,7 +108,7 @@ mice:
 kbd:
 	on nothing
 		-i kbdinit	-o kbdopen	-c kbdclose
-		-r kbdread	-g ioerr	-p ioerr
+		-r kbdread	-g kbdgetc	-p ioerr
 		-w kbdwrite	-s ioerr	-n ioerr
 		-intr kbdhandlerirq
 		
