@@ -116,7 +116,7 @@ int main(){
 
     int width = infoh.width;
     int height = infoh.height;
-    int padding = (4 - (width * 3) % 4) % 4;  
+    
     //Copio los pixeles al array
     read(in_fd, &nueva_imagen, width*height*3);
 
@@ -145,7 +145,7 @@ int main(){
         pthread_join(tid[i], NULL);
     }
 
-    write(out_fd, &nueva_imagen[0], infoh.width * infoh.height * 3); //escribo lo que hicieron los hilos en el archivo de salida
+    write(out_fd, &nueva_imagen, width * height * 3); //escribo lo que hicieron los hilos en el archivo de salida
 
     close(in_fd);
     close(out_fd);
