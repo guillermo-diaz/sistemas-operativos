@@ -1,4 +1,14 @@
+
 3) 
+a)  (Joaco) MALLOC = 44452AC0 
+Siendo que la parte menos significativa es un offset al marco q se obtiene de la tabla de pagina 
+lo 12 bits menos significativos de la direccion fisica serian AC0 Eso pensando q cada marco al inicio arranca donde sus 12 bits 
+bits menos significativos son 000 , en caso de que no seria el desplazamiento entre los 12 bits menos significatos de la direccion del marco 
+con el de los 12 bits menos significativos de la direccion virtual
+b) (Joaco) En xinu no hay proteccion de memoria entre procesos , osea cualquier proceso puede modificar o leer la memoria que 
+corresponde  a otro proceso, es como si toda la memora fuera "compartida"
+Como toda la memoria es compartida, no necesitamos funciones para hacer memoria compartida y mapearla
+c)
 Los inodos describen un archivo cada uno
 Tenemos un total de 4MB de inodos es decir: 
 4*10^6 = 4.000.000 bytes 

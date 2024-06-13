@@ -1,0 +1,101 @@
+Ejercicio 1
+
+a. Ejecutar primero primer_programa, luego segundo_programa.
+
+b. 0x7ff81c36d000
+
+Antes de mapear la memoria compartida.
+
+sebastian.iovaldi@aula3-cpu16:~$ cat /proc/21118/maps
+56120d19f000-56120d1a0000 r--p 00000000 00:2b 27308071                   /export/home/sebastian.iovaldi/SO/segundo_parcial/b.out
+56120d1a0000-56120d1a1000 r-xp 00001000 00:2b 27308071                   /export/home/sebastian.iovaldi/SO/segundo_parcial/b.out
+56120d1a1000-56120d1a2000 r--p 00002000 00:2b 27308071                   /export/home/sebastian.iovaldi/SO/segundo_parcial/b.out
+56120d1a2000-56120d1a3000 r--p 00002000 00:2b 27308071                   /export/home/sebastian.iovaldi/SO/segundo_parcial/b.out
+56120d1a3000-56120d1a4000 rw-p 00003000 00:2b 27308071                   /export/home/sebastian.iovaldi/SO/segundo_parcial/b.out
+56120f00f000-56120f030000 rw-p 00000000 00:00 0                          [heap]
+7ff81c14d000-7ff81c150000 rw-p 00000000 00:00 0 
+7ff81c150000-7ff81c156000 r--p 00000000 00:19 4204246                    /lib/x86_64-linux-gnu/libpthread-2.31.so
+7ff81c156000-7ff81c166000 r-xp 00006000 00:19 4204246                    /lib/x86_64-linux-gnu/libpthread-2.31.so
+7ff81c166000-7ff81c16c000 r--p 00016000 00:19 4204246                    /lib/x86_64-linux-gnu/libpthread-2.31.so
+7ff81c16c000-7ff81c16d000 r--p 0001b000 00:19 4204246                    /lib/x86_64-linux-gnu/libpthread-2.31.so
+7ff81c16d000-7ff81c16e000 rw-p 0001c000 00:19 4204246                    /lib/x86_64-linux-gnu/libpthread-2.31.so
+7ff81c16e000-7ff81c172000 rw-p 00000000 00:00 0 
+7ff81c172000-7ff81c194000 r--p 00000000 00:19 4204235                    /lib/x86_64-linux-gnu/libc-2.31.so
+7ff81c194000-7ff81c2ed000 r-xp 00022000 00:19 4204235                    /lib/x86_64-linux-gnu/libc-2.31.so
+7ff81c2ed000-7ff81c33c000 r--p 0017b000 00:19 4204235                    /lib/x86_64-linux-gnu/libc-2.31.so
+7ff81c33c000-7ff81c340000 r--p 001c9000 00:19 4204235                    /lib/x86_64-linux-gnu/libc-2.31.so
+7ff81c340000-7ff81c342000 rw-p 001cd000 00:19 4204235                    /lib/x86_64-linux-gnu/libc-2.31.so
+7ff81c342000-7ff81c346000 rw-p 00000000 00:00 0 
+7ff81c346000-7ff81c348000 r--p 00000000 00:19 4204248                    /lib/x86_64-linux-gnu/librt-2.31.so
+7ff81c348000-7ff81c34c000 r-xp 00002000 00:19 4204248                    /lib/x86_64-linux-gnu/librt-2.31.so
+7ff81c34c000-7ff81c34e000 r--p 00006000 00:19 4204248                    /lib/x86_64-linux-gnu/librt-2.31.so
+7ff81c34e000-7ff81c34f000 r--p 00007000 00:19 4204248                    /lib/x86_64-linux-gnu/librt-2.31.so
+7ff81c34f000-7ff81c350000 rw-p 00008000 00:19 4204248                    /lib/x86_64-linux-gnu/librt-2.31.so
+7ff81c350000-7ff81c352000 rw-p 00000000 00:00 0 
+7ff81c37a000-7ff81c37b000 r--p 00000000 00:19 4204230                    /lib/x86_64-linux-gnu/ld-2.31.so
+7ff81c37b000-7ff81c39b000 r-xp 00001000 00:19 4204230                    /lib/x86_64-linux-gnu/ld-2.31.so
+7ff81c39b000-7ff81c3a3000 r--p 00021000 00:19 4204230                    /lib/x86_64-linux-gnu/ld-2.31.so
+7ff81c3a4000-7ff81c3a5000 r--p 00029000 00:19 4204230                    /lib/x86_64-linux-gnu/ld-2.31.so
+7ff81c3a5000-7ff81c3a6000 rw-p 0002a000 00:19 4204230                    /lib/x86_64-linux-gnu/ld-2.31.so
+7ff81c3a6000-7ff81c3a7000 rw-p 00000000 00:00 0 
+7ffd8ba37000-7ffd8ba58000 rw-p 00000000 00:00 0                          [stack]
+7ffd8bbba000-7ffd8bbbe000 r--p 00000000 00:00 0                          [vvar]
+7ffd8bbbe000-7ffd8bbc0000 r-xp 00000000 00:00 0                          [vdso]
+
+
+Despues de mapear la memoria compartida
+
+sebastian.iovaldi@aula3-cpu16:~$ cat /proc/21118/maps
+56120d19f000-56120d1a0000 r--p 00000000 00:2b 27308071                   /export/home/sebastian.iovaldi/SO/segundo_parcial/b.out
+56120d1a0000-56120d1a1000 r-xp 00001000 00:2b 27308071                   /export/home/sebastian.iovaldi/SO/segundo_parcial/b.out
+56120d1a1000-56120d1a2000 r--p 00002000 00:2b 27308071                   /export/home/sebastian.iovaldi/SO/segundo_parcial/b.out
+56120d1a2000-56120d1a3000 r--p 00002000 00:2b 27308071                   /export/home/sebastian.iovaldi/SO/segundo_parcial/b.out
+56120d1a3000-56120d1a4000 rw-p 00003000 00:2b 27308071                   /export/home/sebastian.iovaldi/SO/segundo_parcial/b.out
+56120f00f000-56120f030000 rw-p 00000000 00:00 0                          [heap]
+7ff81c14d000-7ff81c150000 rw-p 00000000 00:00 0 
+7ff81c150000-7ff81c156000 r--p 00000000 00:19 4204246                    /lib/x86_64-linux-gnu/libpthread-2.31.so
+7ff81c156000-7ff81c166000 r-xp 00006000 00:19 4204246                    /lib/x86_64-linux-gnu/libpthread-2.31.so
+7ff81c166000-7ff81c16c000 r--p 00016000 00:19 4204246                    /lib/x86_64-linux-gnu/libpthread-2.31.so
+7ff81c16c000-7ff81c16d000 r--p 0001b000 00:19 4204246                    /lib/x86_64-linux-gnu/libpthread-2.31.so
+7ff81c16d000-7ff81c16e000 rw-p 0001c000 00:19 4204246                    /lib/x86_64-linux-gnu/libpthread-2.31.so
+7ff81c16e000-7ff81c172000 rw-p 00000000 00:00 0 
+7ff81c172000-7ff81c194000 r--p 00000000 00:19 4204235                    /lib/x86_64-linux-gnu/libc-2.31.so
+7ff81c194000-7ff81c2ed000 r-xp 00022000 00:19 4204235                    /lib/x86_64-linux-gnu/libc-2.31.so
+7ff81c2ed000-7ff81c33c000 r--p 0017b000 00:19 4204235                    /lib/x86_64-linux-gnu/libc-2.31.so
+7ff81c33c000-7ff81c340000 r--p 001c9000 00:19 4204235                    /lib/x86_64-linux-gnu/libc-2.31.so
+7ff81c340000-7ff81c342000 rw-p 001cd000 00:19 4204235                    /lib/x86_64-linux-gnu/libc-2.31.so
+7ff81c342000-7ff81c346000 rw-p 00000000 00:00 0 
+7ff81c346000-7ff81c348000 r--p 00000000 00:19 4204248                    /lib/x86_64-linux-gnu/librt-2.31.so
+7ff81c348000-7ff81c34c000 r-xp 00002000 00:19 4204248                    /lib/x86_64-linux-gnu/librt-2.31.so
+7ff81c34c000-7ff81c34e000 r--p 00006000 00:19 4204248                    /lib/x86_64-linux-gnu/librt-2.31.so
+7ff81c34e000-7ff81c34f000 r--p 00007000 00:19 4204248                    /lib/x86_64-linux-gnu/librt-2.31.so
+7ff81c34f000-7ff81c350000 rw-p 00008000 00:19 4204248                    /lib/x86_64-linux-gnu/librt-2.31.so
+7ff81c350000-7ff81c352000 rw-p 00000000 00:00 0 
+7ff81c36d000-7ff81c37a000 r--s 00000000 00:1a 5593                       /dev/shm/memoria_compartida            <----  AQUI
+7ff81c37a000-7ff81c37b000 r--p 00000000 00:19 4204230                    /lib/x86_64-linux-gnu/ld-2.31.so
+7ff81c37b000-7ff81c39b000 r-xp 00001000 00:19 4204230                    /lib/x86_64-linux-gnu/ld-2.31.so
+7ff81c39b000-7ff81c3a3000 r--p 00021000 00:19 4204230                    /lib/x86_64-linux-gnu/ld-2.31.so
+7ff81c3a4000-7ff81c3a5000 r--p 00029000 00:19 4204230                    /lib/x86_64-linux-gnu/ld-2.31.so
+7ff81c3a5000-7ff81c3a6000 rw-p 0002a000 00:19 4204230                    /lib/x86_64-linux-gnu/ld-2.31.so
+7ff81c3a6000-7ff81c3a7000 rw-p 00000000 00:00 0 
+7ffd8ba37000-7ffd8ba58000 rw-p 00000000 00:00 0                          [stack]
+7ffd8bbba000-7ffd8bbbe000 r--p 00000000 00:00 0                          [vvar]
+7ffd8bbbe000-7ffd8bbc0000 r-xp 00000000 00:00 0                          [vdso]
+
+2. A que segmento de memoria pertenece?
+    A un segmento especial, reservado por el S.O. para hacer estas cosas.
+
+3.
+a.  Utilizando el paradigma, cuando usamos open() y close(), el sistema puede reservar el uso del device
+que estamos accediendo, garantizando exclusividad y evitando que otros procesos interfieran. En el ejemplo 
+del ej 2, otro proceso podría "robar" las teclas pulsadas.
+    Accediendo a data de los devices mediante write() y read(), llamamos un syscall, que puede pasar a kenel mode (no en el caso de xinu),
+como medida de seguridad, y garantizar que se utilicen los drivers correctos para que la funcionalidad sea correcta.
+
+b. En windows cada proceso tiene su propio mapeo de memoria virtual, y el kernel asigna memoria a cada proceso, que es inaccesible desde otro.
+En el caso de querer acceder a memoria que no le corresponde, un proceso termina abortado con un sigfault.
+En xinu no hay memoria virtual, toda la memoria se accede por direcciones fisicas, y es compartida por todos los procesos. No tiene un mecanismo de seguridad
+que evite el acceso, por lo tanto es más facil realizar ataques entre programas distintos.
+
+c.
+    El FS Unix tiene ventaja, el inodo del archivo en cuestion tiene registro de cuantos bloques tiene el archivo.

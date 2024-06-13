@@ -58,8 +58,7 @@ void convertir(int in_fd, int out_fd, BMPHeader h, BMPInfoHeader infoh, int inic
 
 }
 
-void something_wrong(int fd, const char *m)
-{
+void something_wrong(int fd, const char *m){
 	if (fd > 0)
 		close(fd);
 	printf("%s\n", m),
