@@ -36,7 +36,7 @@ void kbdhandler(void){
 
 	if(!((buffC.fin+1)%KEYBOARD_BUFFER_SIZE == buffC.inicio)){
         //SI TIENE ESPACIO
-		send(pidKbd, scancode)
+		send(pidKbd, scancode);
         // buffC.buffer[buffC.fin] = scancode;
         // buffC.fin = (buffC.fin+1)%KEYBOARD_BUFFER_SIZE;
         // signal(buffC.semEntrada);
