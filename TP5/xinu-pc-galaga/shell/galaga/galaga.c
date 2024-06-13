@@ -153,7 +153,7 @@ int galaga_game(void) {
 			galaga();
 		}
 		//player shots 
-		if (teclas[2] == 1) {
+		if (KEY_DOWN_NOW(BUTTON_A)) {
 			if (shoots[curr_shot] == 0) {
 				shoots[curr_shot] = 136*240 + player.playerX+9; /* 24 widht player */
 				curr_shot++;
@@ -163,10 +163,10 @@ int galaga_game(void) {
 		
 		}
 		//player movement input
-		if (teclas[0] == 1 && (player.playerX > 0)) {
+		if (KEY_DOWN_NOW(BUTTON_LEFT) && (player.playerX > 0)) {
 			player.playerX -= playerspeed;
 		}
-		if (teclas[1] == 1 && (player.playerX <= 216)) {
+		if (KEY_DOWN_NOW(BUTTON_RIGHT) && (player.playerX <= 216)) {
 			player.playerX += playerspeed;
 		}
 		if (KEY_DOWN_NOW(BUTTON_UP) && (player.playerY > 25)) {
@@ -355,15 +355,15 @@ void teclado(){
 	open(KEYBOARD, NULL, NULL);
     while (1) {
         read(KEYBOARD, &tecla_actual, 1);
-		switch(tecla_actual){
-			case BUTTON_LEFT: teclas[0] = 1; break;
-			case BUTTON_RIGHT: teclas[1] = 1; break;
-			case BUTTON_A: teclas[2] = 1; break;
-			case BUTTON_A_REL: teclas[2] = 0; break;
-			case BUTTON_LEFT_REL: teclas[0] = 0; break;
-			case BUTTON_RIGHT_REL: teclas[1] = 0; break;
-		}
-		printf("TECLA: %d\n", tecla_actual);
+		// switch(tecla_actual){
+		// 	case BUTTON_LEFT: teclas[0] = 1; break;
+		// 	case BUTTON_RIGHT: teclas[1] = 1; break;
+		// 	case BUTTON_A: teclas[2] = 1; break;
+		// 	case BUTTON_A_REL: teclas[2] = 0; break;
+		// 	case BUTTON_LEFT_REL: teclas[0] = 0; break;
+		// 	case BUTTON_RIGHT_REL: teclas[1] = 0; break;
+		// }
+		// printf("TECLA: %d\n", tecla_actual);
     }  
 	close(KEYBOARD);
 }
