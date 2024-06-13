@@ -1,0 +1,7 @@
+3) 
+Los inodos describen un archivo cada uno
+Tenemos un total de 4MB de inodos es decir: 
+4*10^6 = 4.000.000 bytes 
+Como cada inodo ocupa 64 bytes entonces:
+4.000.000/ 64 = 62500 inodos
+Es decir, que el tamaño maximo de archivos que podremos tener será de 62500 archivos.
