@@ -176,7 +176,7 @@ int galaga_game(void) {
 			player.playerY += playerspeed;
 		}
 		waitForVBlank();
-		sleepms(20);
+		sleepms(30);
 
 		//terminar
 		if (KEY_DOWN_NOW(BUTTON_ESC)) {
